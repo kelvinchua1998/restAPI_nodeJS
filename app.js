@@ -3,13 +3,18 @@ const app = express()
 const morgan = require("morgan")
 const bodyparser = require("body-parser")
 const mongoose = require("mongoose")
+
 // routes for requests
 const productsRoutes = require("./api/routes/products")
 const ordersRoutes = require("./api/routes/orders")
-// mongoose.connect("mongodb+srv://kelvinchua1998:" + process.env.mongoDBpw + "@database-debgd.mongodb.net/test?retryWrites=true&w=majority",
-// {
-//     useMongoClient: true
-// })
+const logfileRoutes = require("./api/routes/logfile")
+
+// connect to mongoose database
+mongoose.connect("mongodb+srv://kelvinchua1998:" + process.env.mongoDBpw + "@database-debgd.mongodb.net/test?retryWrites=true&w=majority",
+{
+    useMongoClient: true
+})
+
 // show stats in terminal
 app.use(morgan("dev"))
 app.use(bodyparser.urlencoded({extended: false}))
@@ -31,6 +36,8 @@ app.use((req,res,next)=>{
 // endpoints that handle incoming requests
 app.use("/products",productsRoutes)
 app.use("/orders",ordersRoutes)
+app.use("/logfile", logfileRoutes)
+
 //your custom error message
 app.use((req,res,next)=>
 {

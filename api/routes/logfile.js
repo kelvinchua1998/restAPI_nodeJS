@@ -1,6 +1,7 @@
 const express =require("express")
 const router = express.Router()
-const multer = require("multer")
+const multer = require("multer")// parse file module
+var fs = require('fs') //append file module
 
 // settings to configure filename and destination
 const storage = multer.diskStorage({
@@ -38,6 +39,15 @@ router.get("/", (req,res,next)=> {
 
 router.post("/",upload.single("logfile") ,(req,res,next)=> {
     console.log(req.file)
+    // var stream = fs.createWriteStream("append.txt", {flags:'a'});
+
+    // console.log(new Date().toISOString());
+    // [...Array(10000)].forEach( function (item,index) {
+    //     stream.write(index + "\n");
+    // });
+    // console.log(new Date().toISOString());
+    // stream.end();
+
     res.status(200).json({
         errorCode: 0,
         message: "POST request success",
