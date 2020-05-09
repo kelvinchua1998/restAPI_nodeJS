@@ -6,6 +6,7 @@ const mongoose = require("mongoose")//for mongoose db
 
 //import model
 const Products = require("../models/product")
+
 // settings to configure filename and destination
 const storage = multer.diskStorage({
     destination: function(req,file,cb)
@@ -17,6 +18,7 @@ const storage = multer.diskStorage({
         cb(null,file.originalname)
     }
 })
+
 //able to set limits such as file size - interms of bytes
 const upload = multer({storage: storage})
 

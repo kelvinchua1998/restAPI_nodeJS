@@ -3,79 +3,40 @@ const router = express.Router()
 const multer = require("multer")// parse file module
 var fs = require('fs') //append file module
 
-// settings to configure filename and destination
 const storage = multer.diskStorage({
     destination: function(req,file,cb)
     {
-        cb(null,"./upload/")
+        cb(null,"./upload/files_received")
     },
     filename: function(req,file,cb) 
     {
         cb(null,file.originalname)
     }
 })
-//able to set limits such as file size - interms of bytes
+
 const upload = multer({storage: storage})
 
-
-const fileFilter = (req,file,cb)=>{
-    //reject a file
-    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png")
-    {
-        cb(null,true)
-    }
-    else
-    {
-        cb(null,false)
-    }
+function readAppend(destination,source){
+    var data = fs.readFileSync(source,function(err,data){
+        if (err) throw err
+        console.log("file was read")
+    })
+    fs.appendFileSync(destination,data,function(err,data){
+        if (err) throw err
+        console.log("the data is appended to the file!")
+    })
 }
 
-router.get("/", (req,res,next)=> {
-    res.status(200).json({
-        errorCode: 0,
-        message: "GET request success"
-    })
-})
 
-router.post("/",upload.single("logfile") ,(req,res,next)=> {
+router.post("/",upload.single("logfile"),(req,res,next)=> {
     console.log(req.file)
-    // var stream = fs.createWriteStream("append.txt", {flags:'a'});
-
-    // console.log(new Date().toISOString());
-    // [...Array(10000)].forEach( function (item,index) {
-    //     stream.write(index + "\n");
-    // });
-    // console.log(new Date().toISOString());
-    // stream.end();
-
-    res.status(200).json({
-        errorCode: 0,
-        message: "POST request success",
-    })
-})
-
-router.get("/:logid", (req,res,next)=> {
-    const id = req.params.logid
+    //the funtion below will append the file received into the date file, is the file does not exist it would create it
+    readAppend("upload/" + new Date().getDate().toString()+ "-" + (new Date().getMonth()+1).toString() + "-" + new Date().getFullYear().toString() + ".txt", req.file.path)
+    console.log(new Date().toLocaleDateString())
         res.status(200).json({
-            errorCode: 0,
-            message: "you passed an id"
+            errorCode: 0 ,
+            message: "success",
         })
-    
 })
-
-router.patch("/:id", (req,res,next)=> {
-    res.status(200).json({
-        errorCode: 0,
-        message: "patch request"
-    })
-})
-
-router.delete("/:id", (req,res,next)=> {
-    res.status(200).json({
-        errorCode: 0,
-        message: "delete request"
-    })
-})
-
 
 module.exports = router

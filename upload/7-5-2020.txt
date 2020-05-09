@@ -1,0 +1,21 @@
+Thu May 07 10:28:00 CST 2020
+Download: 310.64 Mbit/s
+Upload: 256.32 Mbit/s
+Thu May 07 10:29:31 CST 2020
+Download: 364.24 Mbit/s
+Upload: 267.81 Mbit/s
+Thu May 07 10:31:02 CST 2020
+Download: 351.25 Mbit/s
+Upload: 262.94 Mbit/s
+Thu May 07 10:32:35 CST 2020
+Download: 342.09 Mbit/s
+Upload: 263.39 Mbit/s
+Thu May 07 19:18:00 CST 2020
+Download: 212.66 Mbit/s
+Upload: 192.82 Mbit/s
+Thu May 07 19:33:40 CST 2020
+Download: 286.71 Mbit/s
+Upload: 215.78 Mbit/s
+Thu May 07 19:35:27 CST 2020
+Download: 136.72 Mbit/s
+Upload: 173.41 Mbit/s

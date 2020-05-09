@@ -7,13 +7,13 @@ const mongoose = require("mongoose")
 // routes for requests
 const productsRoutes = require("./api/routes/products")
 const ordersRoutes = require("./api/routes/orders")
+const testresultRoutes = require("./api/routes/testresult")
 const logfileRoutes = require("./api/routes/logfile")
+const applistRoutes = require("./api/routes/applist")
+
 
 // connect to mongoose database
-mongoose.connect("mongodb+srv://kelvinchua1998:" + process.env.mongoDBpw + "@database-debgd.mongodb.net/test?retryWrites=true&w=majority",
-{
-    useMongoClient: true
-})
+mongoose.connect("mongodb+srv://kelvinchua1998:" + process.env.mongoDBpw + "@database-debgd.mongodb.net/test?retryWrites=true&w=majority")
 
 // show stats in terminal
 app.use(morgan("dev"))
@@ -36,7 +36,10 @@ app.use((req,res,next)=>{
 // endpoints that handle incoming requests
 app.use("/products",productsRoutes)
 app.use("/orders",ordersRoutes)
-app.use("/logfile", logfileRoutes)
+
+app.use("/testresult", testresultRoutes)
+app.use("/logfile",logfileRoutes)
+app.use("/ap_list", applistRoutes)
 
 //your custom error message
 app.use((req,res,next)=>
@@ -58,5 +61,6 @@ app.use((error, req,res,next)=>
         
     })
 })
+
 
 module.exports = app
