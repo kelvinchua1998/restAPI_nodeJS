@@ -73,7 +73,7 @@ router.post("/",(req,res,next)=> {
         res.status(200).json({
             errorCode: 0 ,
             message: "success",
-            createdProduct: result
+            created: result
         })
     })
     .catch(err => {

@@ -1,0 +1,192 @@
+Rest API for test results
+
+scheme: HTTP
+
+to start server, type into the terminal "npm start"
+
+endpoints:
+
+1./testresult
+    GET protocol:
+        description: would get the latest entry for the test result in mongoDB
+
+        response(200):
+            {
+                "errorCode": 0,
+                "message": "GET request success",
+                "data": [
+                    {
+                        "_id": "5eb69c633eb57e0db49e5f24",
+                        "ssid" : "wifi1",
+                        "ping" : "263.39Mbit/s"
+                        "download" : "342.09Mbit/s"
+                        "upload" : "263.39Mbit/s"
+                        "testServer" : "Singapore"
+                        "timeStamp" : "07 May 2020 10:32"
+                        "__v": 0
+                    }
+                ]
+            }
+
+    POST protocol:
+        description: send in an entry of the test result
+
+        payload:
+            {
+                "ssid" : "string",
+                "ping" : "string",
+                "download" : "string",
+                "upload" : "string",
+                "testServer" : "string",
+                "timeStamp" : "string"
+            }
+
+        response(200):
+            {
+                "errorCode": 0,
+                "message": "success",
+                "created": [
+                    {
+                        "_id": "5eb69c633eb57e0db49e5f24",
+                        "ssid" : "wifi1",
+                        "ping" : "263.39Mbit/s",
+                        "download" : "342.09Mbit/s",
+                        "upload" : "263.39Mbit/s",
+                        "testServer" : "Singapore",
+                        "timeStamp" : "07 May 2020 10:32",
+                        "__v": 0
+                    }
+                ]
+            }
+
+2. /logfile
+     POST protocol:
+        description: send in an entry of the test result in a logfile.txt, the file will be uploaded and store in upload/file_received. The entire contents of the file will be appended into a text file created for todays date
+
+        response(200):
+            {
+                "errorCode": 0,
+                "message": "success"
+            }
+
+3. /ap_list
+    GET protocol:
+        description: would get all APs from the mongolDB in JSON format
+
+        response(200):
+            [
+                {
+                    "_id": "5eb28ce658e1a1619891ad16",
+                    "ssid": "wifi1",
+                    "site": "idk",
+                    "location": "idk",
+                    "wifiController": "idk",
+                    "password": "idk",
+                    "model": "idk",
+                    "runtime": "idk",
+                    "mac": "idk",
+                    "IP": "192.168.1.103",
+                    "desc": "idk",
+                    "lat": "idk",
+                    "lon": "idk",
+                    "testResult": [],
+                    "__v": 0
+                },
+                {
+                    "_id": "5eb28cef58e1a1619891ad17",
+                    "ssid": "wifi3",
+                    "site": "idk",
+                    "location": "corrected",
+                    "wifiController": "idk",
+                    "password": "idk",
+                    "model": "idk",
+                    "runtime": "idk",
+                    "mac": "yeap baby",
+                    "IP": "yeap baby",
+                    "desc": "idk",
+                    "lat": "idk",
+                    "lon": "idk",
+                    "testResult": [],
+                    "__v": 0
+                },
+                {
+                    "_id": "5eb28eecbadc9479a8b6e263",
+                    "ssid": "String",
+                    "site": "String",
+                    "location": "String",
+                    "wifiController": "String",
+                    "password": "String",
+                    "model": "String",
+                    "runtime": "string",
+                    "mac": "String",
+                    "IP": "String",
+                    "desc": "String",
+                    "lat": "String",
+                    "lon": "String",
+                    "testResult": [],
+                    "__v": 0
+                }
+            ]
+
+    POST protocol:
+        description: send in an entry of the test result
+
+        payload:
+            {
+                "ssid": "string",
+                "site": "string",
+                "location": "string",
+                "wifiController": "string",
+                "password": "string",
+                "model": "string",
+                "runtime": "string",
+                "mac": " string",
+                "IP": " string",
+                "desc": "string",
+                "lat": "string",
+                "lon": "string",
+                "testResult": [list],
+            }
+
+        response(200):
+            {
+                "errorCode": 0,
+                "message": "success",
+                "created": {
+                    "_id": "5eb6ba0c0a0ee04048354484",
+                    "ssid": "wifi1",
+                    "site": "idk",
+                    "location": "idk",
+                    "wifiController": "idk",
+                    "password": "idk",
+                    "model": "idk",
+                    "runtime": "idk",
+                    "mac": "idk",
+                    "IP": "192.168.1.103",
+                    "desc": "idk",
+                    "lat": "idk",
+                    "lon": "idk",
+                    "testResult": [],
+                    "__v": 0
+                }
+            }
+
+    PATCH protocol:
+        description: update a current entry in mongolDB
+        parameters:
+            /<SSID>
+
+        eg./ap_list/wifi1
+
+        payload:
+            [{"propName":"fieldname", "value":"value u want to change into"}]
+            *it must be in a list
+
+            eg.
+            [{"propName":"IP", "value":"yeap baby"},{"propName":"mac", "value":"yeap baby"}]
+
+        response(200):
+            {
+            errorCode: 0 ,
+            message: "updated"
+            }

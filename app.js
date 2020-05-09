@@ -4,12 +4,27 @@ const morgan = require("morgan")
 const bodyparser = require("body-parser")
 const mongoose = require("mongoose")
 
-// routes for requests
-const productsRoutes = require("./api/routes/products")
-const ordersRoutes = require("./api/routes/orders")
+// const swaggerjsdoc = require("swagger-jsdoc")
+// const swaggerUI = require("swagger-ui-express")
+
+// const swaggerOptions = {
+//     swaggerDefinition:{
+//         info:{
+//             title: "restAPI",
+//             description: "restAPI for speed test",
+//             servers: ["https://localhost:8080"]
+//         }
+//     },
+//     apis: ["app.js"]
+// }
+
+// const swaggerDocs = swaggerjsdoc(swaggerOptions)
+// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs))
+
+
 const testresultRoutes = require("./api/routes/testresult")
 const logfileRoutes = require("./api/routes/logfile")
-const applistRoutes = require("./api/routes/applist")
+const applistRoutes = require("./api/routes/ap_list")
 
 
 // connect to mongoose database
@@ -33,9 +48,6 @@ app.use((req,res,next)=>{
     next()
 })
 
-// endpoints that handle incoming requests
-app.use("/products",productsRoutes)
-app.use("/orders",ordersRoutes)
 
 app.use("/testresult", testresultRoutes)
 app.use("/logfile",logfileRoutes)
