@@ -1,0 +1,402 @@
+openapi: 3.0.0
+info:
+  title: restAPI
+  version: '1.0'
+  description: REST API for speedtest results
+servers:
+  - url: 'http://localhost:8080'
+paths:
+  /testresult:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - testResult
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode:
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        format: uuid
+                      ssid:
+                        type: string
+                      ping:
+                        type: string
+                      download:
+                        type: string
+                      upload:
+                        type: string
+                      testServer:
+                        type: string
+                      timeStamp:
+                        type: string
+                      __v:
+                        type: number
+              examples:
+                example-1:
+                  value:
+                    errorCode: 0
+                    message: GET request success
+                    data:
+                      - _id: 5eb6b555f63bc7413cb26355
+                        ssid: wifi1
+                        ping: 263.39Mbit/s
+                        download: 342.09Mbit/s
+                        upload: 263.39Mbit/s
+                        testServer: Singapore
+                        timeStamp: '07 May 2020 10:32'
+                        __v: 0
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+      operationId: get-testresult
+      description: would get the latest entry for the test result in mongoDB
+    post:
+      summary: ''
+      operationId: post-testresult
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode:
+                    type: integer
+                  message:
+                    type: string
+                  created:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        format: uuid
+                      ssid:
+                        type: string
+                      ping:
+                        type: string
+                      download:
+                        type: string
+                      upload:
+                        type: string
+                      testServer:
+                        type: string
+                      timeStamp:
+                        type: string
+                      __v:
+                        type: integer
+              examples:
+                example-1:
+                  value:
+                    errorCode: 0
+                    message: success
+                    created:
+                      - _id: 5eb69c633eb57e0db49e5f24
+                        ssid: wifi1
+                        ping: 263.39Mbit/s
+                        download: 342.09Mbit/s
+                        upload: 263.39Mbit/s
+                        testServer: Singapore
+                        timeStamp: '07 May 2020 10:32'
+                        __v: 0
+      description: send in an entry of the test result
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ssid:
+                  type: string
+                ping:
+                  type: string
+                download:
+                  type: string
+                upload:
+                  type: string
+                testServer:
+                  type: string
+                timeStamp:
+                  type: string
+            examples:
+              example-1:
+                value:
+                  ssid: string
+                  ping: string
+                  download: string
+                  upload: string
+                  testServer: string
+                  timeStamp: string
+      tags:
+        - testResult
+  /logfile:
+    post:
+      summary: ''
+      operationId: post-logfile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode:
+                    type: integer
+                  message:
+                    type: string
+              examples:
+                example-1:
+                  value:
+                    errorCode: 0
+                    message: success
+      description: 'send in an entry of the test result in a logfile.txt, the file will be uploaded and store in upload/file_received. The entire contents of the file will be appended into a text file created for todays date'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/restResult'
+        description: |-
+          content of the the file:
+          Sun Feb 19 20:00:00 CST 2017
+          Download: 19.88 Mbit/s
+          Upload: 27.82 Mbit/s
+      tags:
+        - logfile
+  '/ap_list/{ssid}':
+    parameters:
+      - schema:
+          type: string
+        name: ssid
+        in: path
+        description: ssid of the wifi
+    get:
+      summary: ''
+      operationId: get-ap_list-ssid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ap_list'
+              examples:
+                example-1:
+                  value:
+                    - _id: 5eb28ce658e1a1619891ad16
+                      ssid: wifi1
+                      site: idk
+                      location: idk
+                      wifiController: idk
+                      password: idk
+                      model: idk
+                      runtime: idk
+                      mac: idk
+                      IP: 192.168.1.103
+                      desc: idk
+                      lat: idk
+                      lon: idk
+                      testResult: []
+                      __v: 0
+                    - _id: 5eb28cef58e1a1619891ad17
+                      ssid: wifi3
+                      site: idk
+                      location: corrected
+                      wifiController: idk
+                      password: idk
+                      model: idk
+                      runtime: idk
+                      mac: yeap baby
+                      IP: yeap baby
+                      desc: idk
+                      lat: idk
+                      lon: idk
+                      testResult: []
+                      __v: 0
+                    - _id: 5eb28eecbadc9479a8b6e263
+                      ssid: String
+                      site: String
+                      location: String
+                      wifiController: String
+                      password: String
+                      model: String
+                      runtime: string
+                      mac: String
+                      IP: String
+                      desc: String
+                      lat: String
+                      lon: String
+                      testResult: []
+                      __v: 0
+      description: would get all APs from the mongolDB in JSON format
+      tags:
+        - AP list
+    post:
+      summary: ''
+      operationId: post-ap_list-ssid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode:
+                    type: string
+                  message:
+                    type: string
+                  created:
+                    $ref: '#/components/schemas/ap_list'
+              examples:
+                example-1:
+                  value:
+                    errorCode: 0
+                    message: success
+                    created:
+                      _id: 5eb6ba0c0a0ee04048354484
+                      ssid: wifi1
+                      site: idk
+                      location: idk
+                      wifiController: idk
+                      password: idk
+                      model: idk
+                      runtime: idk
+                      mac: idk
+                      IP: 192.168.1.103
+                      desc: idk
+                      lat: idk
+                      lon: idk
+                      testResult: []
+                      __v: 0
+      description: send in an entry of the test result
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ap_list'
+            examples:
+              example-1: {}
+      tags:
+        - AP list
+    patch:
+      summary: ''
+      operationId: patch-ap_list-ssid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errorCode:
+                    type: integer
+                  message:
+                    type: string
+              examples:
+                example-1:
+                  value:
+                    errorCode: 0
+                    message: updated
+      description: |-
+        update a current entry in mongolDB
+        requires /{ssid}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+            examples:
+              example-1:
+                value:
+                  - propName: fieldname
+                    value: value u want to change into
+        description: '[{"propName":"fieldname", "value":"value u want to change into"}]'
+      tags:
+        - AP list
+components:
+  schemas:
+    restResult:
+      title: testResult
+      type: object
+      properties:
+        ssid:
+          type: string
+        ping:
+          type: string
+        download:
+          type: string
+        upload:
+          type: string
+        testServer:
+          type: string
+        timeStamp:
+          type: string
+      x-examples:
+        example-1: {}
+      description: model for the test results in mongolDB
+      x-tags:
+        - models
+    ap_list:
+      title: ap_list
+      type: object
+      x-examples:
+        example-1:
+          ssid: wifi1
+          site: idk
+          location: idk
+          wifiController: idk
+          password: idk
+          model: idk
+          runtime: idk
+          mac: idk
+          IP: 192.168.1.103
+          desc: idk
+          lat: idk
+          lon: idk
+          testResult: []
+      properties:
+        ssid:
+          type: string
+        site:
+          type: string
+        location:
+          type: string
+        wifiController:
+          type: string
+        password:
+          type: string
+        model:
+          type: string
+        runtime:
+          type: string
+        mac:
+          type: string
+        IP:
+          type: string
+        desc:
+          type: string
+        lat:
+          type: string
+        lon:
+          type: string
+        testResult:
+          $ref: '#/components/schemas/restResult'
+      x-tags:
+        - models
+  securitySchemes: {}
