@@ -399,4 +399,5 @@ components:
           $ref: '#/components/schemas/restResult'
       x-tags:
         - models
+      description: models for the Access point in mongolDB
   securitySchemes: {}
