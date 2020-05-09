@@ -1,3 +1,6 @@
+url for api documentation:
+https://stoplight.io/p/docs/gh/kelvinchua1998/restapi_nodejs/reference/restAPI.v1.yaml?srn=gh/kelvinchua1998/restapi_nodejs/reference/restAPI.v1.yaml&group=master
+
 Rest API for test results
 
 scheme: HTTP
